@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<error-handler name="globalError_Handler" doc:id="d0d7ef04-189c-4b28-8394-1be3b82e7e69" >
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="64698715-68e1-4720-bb5f-0f08040547a1" >
+			<logger level="INFO" doc:name="Logger" doc:id="782bea5b-455f-47f4-adf5-5e5721bddf24" />
+		</on-error-propagate>
+	</error-handler>
+	<sub-flow name="set-error-response-sub-flow" doc:id="6ea2675e-b881-4a84-8e85-5ee0d9af4d2a" >
+		<ee:transform doc:name="Transform Message" doc:id="20079522-a86b-462f-9363-2db86ac65a4c">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/java
+---
+{
+	error: {
+		"message": error.description,
+		"type": error.errorType
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+</mule>
