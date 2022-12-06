@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="policy-test-suite.xml" />
+	<munit:test name="policy-test-suite-policySub_FlowTest" doc:id="222325db-5b28-4c82-8946-9ddee563ca55" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="f139b477-deaa-4a35-a6da-a6b45d4096b6" processor="file:write">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="c7b35193-49c4-42aa-b7c9-63d4dd22f652" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="9f632078-b31a-406b-8377-a1c9b52bb6ac" >
+				<munit:payload value='	{&#10;		"personalDetails": {&#10;			"name": "Nikhil",&#10;			"dateOfBirth": "2020-11-14",&#10;			"address": "USA"&#10;		},&#10;		"trip": {&#10;			"destination": "Asia",&#10;			"tripStartDate": "2020-11-14",&#10;			"tripEndDate": "2020-12-20"&#10;		},&#10;		"plan": {&#10;			"planName": "gold",&#10;			"premium": 300,&#10;			"coverage": 25000&#10;		},&#10;		"purchaceDate": "2020-11-11"&#10;	}' mediaType="application/json" />
+				<munit:attributes value='	{&#10;	"headers":{&#10;	"username": "Nikhil"}&#10;	}' mediaType="application/json" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to policySub_Flow" doc:id="1dd321c9-c3a6-4bcf-ba02-9951a44709e1" name="policySub_Flow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="varify succesful message" doc:id="13945649-e771-4755-bd45-ce97ffe405c4" actual="#[payload.message]" expected='#["policy created successfully"]'/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

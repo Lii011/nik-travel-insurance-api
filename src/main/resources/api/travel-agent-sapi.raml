@@ -1,5 +1,8 @@
 #%RAML 1.0
 title: travel-agent-sapi
+uses:
+  dataTypes: library/Library.raml
+  
 
 /quote:
   description: get quote
@@ -31,6 +34,29 @@ title: travel-agent-sapi
         body:
           application/json:
             example: !include ./example/getQuoteResponse.json
+
+/policy:    
+  post:
+    description: create new policy
+    headers:
+      username:
+        description: username who is creating this policy
+        type: string
+        required: true
+    body:
+      application/json:
+        type: dataTypes.createPolicyTypes
+        example: !include ./example/postPolicyReq.json
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include ./example/postPolicyRep.json
+              
+          
+  
+    
+
               
    
         
