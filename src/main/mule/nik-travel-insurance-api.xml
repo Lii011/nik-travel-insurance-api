@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd 
-http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd  http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
     <http:listener-config name="travel-agent-sapi-httpListenerConfig">
         <http:listener-connection host="0.0.0.0" port="8081" />
     </http:listener-config>
     <apikit:config name="travel-agent-sapi-config" api="travel-agent-sapi.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
-    <api-gateway:autodiscovery apiId="18311546" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="41f23289-a52d-4001-a300-4805448fedcb" flowRef="travel-agent-sapi-main" />
+    <configuration-properties doc:name="Configuration properties" doc:id="f25e221d-858c-4cb7-8a95-1c992ff8f957" file="config\dev.properties" />
 	<flow name="travel-agent-sapi-main">
         <http:listener config-ref="travel-agent-sapi-httpListenerConfig" path="/api/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
@@ -30,7 +29,7 @@ output application/json
                         <ee:set-variable variableName="httpStatus">400</ee:set-variable>
                     </ee:variables>
                 </ee:transform>
-				<flow-ref doc:name="set-error-response-sub-flow" doc:id="3668d7ac-88d6-40ef-a799-5be5e91f6b18" name="set-error-response-sub-flow"/>
+                <flow-ref doc:name="set-error-response-sub-flow" doc:id="3668d7ac-88d6-40ef-a799-5be5e91f6b18" name="set-error-response-sub-flow" />
             </on-error-propagate>
             <on-error-propagate type="APIKIT:NOT_FOUND">
                 <ee:transform>
@@ -44,7 +43,7 @@ output application/json
                         <ee:set-variable variableName="httpStatus">404</ee:set-variable>
                     </ee:variables>
                 </ee:transform>
-				<flow-ref doc:name="set-error-response-sub-flow" doc:id="99487e9a-2bbe-49d8-a378-de8396f4b922" name="set-error-response-sub-flow"/>
+                <flow-ref doc:name="set-error-response-sub-flow" doc:id="99487e9a-2bbe-49d8-a378-de8396f4b922" name="set-error-response-sub-flow" />
             </on-error-propagate>
             <on-error-propagate type="APIKIT:METHOD_NOT_ALLOWED">
                 <ee:transform>
@@ -58,7 +57,7 @@ output application/json
                         <ee:set-variable variableName="httpStatus">405</ee:set-variable>
                     </ee:variables>
                 </ee:transform>
-				<flow-ref doc:name="set-error-response-sub-flow" doc:id="fcc5bb87-1c49-4c61-8049-b46b1c72ec58" name="set-error-response-sub-flow"/>
+                <flow-ref doc:name="set-error-response-sub-flow" doc:id="fcc5bb87-1c49-4c61-8049-b46b1c72ec58" name="set-error-response-sub-flow" />
             </on-error-propagate>
             <on-error-propagate type="APIKIT:NOT_ACCEPTABLE">
                 <ee:transform>
@@ -72,7 +71,7 @@ output application/json
                         <ee:set-variable variableName="httpStatus">406</ee:set-variable>
                     </ee:variables>
                 </ee:transform>
-				<flow-ref doc:name="set-error-response-sub-flow" doc:id="77c0e570-5b8b-48b8-8078-c77c39aafaff" name="set-error-response-sub-flow"/>
+                <flow-ref doc:name="set-error-response-sub-flow" doc:id="77c0e570-5b8b-48b8-8078-c77c39aafaff" name="set-error-response-sub-flow" />
             </on-error-propagate>
             <on-error-propagate type="APIKIT:UNSUPPORTED_MEDIA_TYPE">
                 <ee:transform>
@@ -86,7 +85,7 @@ output application/json
                         <ee:set-variable variableName="httpStatus">415</ee:set-variable>
                     </ee:variables>
                 </ee:transform>
-				<flow-ref doc:name="set-error-response-sub-flow" doc:id="ee8d8220-3737-40dd-92ab-14adb5033849" name="set-error-response-sub-flow"/>
+                <flow-ref doc:name="set-error-response-sub-flow" doc:id="ee8d8220-3737-40dd-92ab-14adb5033849" name="set-error-response-sub-flow" />
             </on-error-propagate>
             <on-error-propagate type="APIKIT:NOT_IMPLEMENTED">
                 <ee:transform>
@@ -100,7 +99,7 @@ output application/json
                         <ee:set-variable variableName="httpStatus">501</ee:set-variable>
                     </ee:variables>
                 </ee:transform>
-				<flow-ref doc:name="set-error-response-sub-flow" doc:id="c9bff770-a80f-49fd-8a14-f248e624858e" name="set-error-response-sub-flow"/>
+                <flow-ref doc:name="set-error-response-sub-flow" doc:id="c9bff770-a80f-49fd-8a14-f248e624858e" name="set-error-response-sub-flow" />
             </on-error-propagate>
         </error-handler>
     </flow>
@@ -132,6 +131,9 @@ output application/json
         </error-handler>
     </flow>
     <flow name="get:\quote:travel-agent-sapi-config">
-		<flow-ref doc:name="Flow Reference" doc:id="a77bf88a-24ee-4638-ab81-b6e644e189ce" name="getQuoteSub_Flow"/>
+        <flow-ref doc:name="getQuoteSub_Flow" doc:id="a77bf88a-24ee-4638-ab81-b6e644e189ce" name="getQuoteSub_Flow" />
+    </flow>
+    <flow name="post:\policy:application\json:travel-agent-sapi-config">
+        <flow-ref doc:name="policySub_Flow" doc:id="8a599b20-c9ab-42a8-883e-6c5fef3573b3" name="policySub_Flow"/>
     </flow>
 </mule>

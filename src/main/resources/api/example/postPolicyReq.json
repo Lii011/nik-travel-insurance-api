@@ -1,0 +1,19 @@
+
+	{
+		"personalDetails": {
+			"name": "Nikhil",
+			"dateOfBirth": "2020-11-14",
+			"address": "USA"
+		},
+		"trip": {
+			"destination": "Asia",
+			"tripStartDate": "2020-11-14",
+			"tripEndDate": "2020-12-20"
+		},
+		"plan": {
+			"planName": "gold",
+			"premium": 300,
+			"coverage": 25000
+		},
+		"purchaceDate": "2020-11-11"
+	}
