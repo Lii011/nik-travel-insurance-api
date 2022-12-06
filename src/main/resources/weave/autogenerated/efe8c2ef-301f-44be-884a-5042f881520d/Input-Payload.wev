@@ -1,0 +1,25 @@
+%dw 2.0
+
+type auto_efe8c2ef_301f_44be_884a_5042f881520d_Input_Payload = {
+  purchaceDate: String, 
+  trip: {
+    tripStartDate: String, 
+    destination: String, 
+    tripEndDate: String, 
+    _?: Any
+  }, 
+  personalDetails: {
+    address: String, 
+    name: String, 
+    dateOfBirth: String, 
+    _?: Any
+  }, 
+  plan: {
+    coverage: Number, 
+    premium: Number, 
+    planName: String, 
+    _?: Any
+  }, 
+  _?: Any
+}
+

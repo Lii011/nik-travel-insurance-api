@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<sub-flow name="policySub_Flow" doc:id="efe8c2ef-301f-44be-884a-5042f881520d" >
+		<logger level="INFO" doc:name="request received" doc:id="a62245fe-d919-48fb-933c-dc822b67d789" message="request to create Policy"/>
+		<ee:transform doc:name="set variable" doc:id="c5ef08c0-6aa9-4af9-874f-109e5537a982" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="username" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.username]]></ee:set-variable>
+				<ee:set-variable variableName="folderLocation" ><![CDATA[%dw 2.0
+output application/json
+---
+p("policyFolderLocation")]]></ee:set-variable>
+				<ee:set-variable variableName="policyId" ><![CDATA[%dw 2.0
+output application/json
+---
+uuid()]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="set payload" doc:id="23d23649-69bb-4ab1-9aa0-d951011a8e2f" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload
+	++
+	{
+		"policyId": vars.policyId,
+		"createdBy": vars.username
+	}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<file:write doc:id="c7b35193-49c4-42aa-b7c9-63d4dd22f652" path='#[vars.folderLocation ++ vars.policyId ++ ".json"]'/>
+		<ee:transform doc:name="set response" doc:id="616b8da0-52c8-412e-8d0a-fa4198834a30" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message": "policy created successfully",
+	"policyId": vars.policyId
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="request completed" doc:id="75dc85fd-b370-4d20-880c-3a71270baf5b" message="create policy completed successfully"/>
+	</sub-flow>
+</mule>
