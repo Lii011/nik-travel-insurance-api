@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="getQuote-test-suite.xml" />
+	<munit:test name="getQuote-test-suite-getQuoteSub_FlowTest" doc:id="6e1a6254-152e-41ff-8ddc-36782a5cf9ca" description="Test">
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="42a68983-919b-44c1-97fe-d1d35f6d62ab" >
+				<munit:payload value='payload map((item,index) -&gt;&#10;{	&#10;	"plan": item.plan,&#10;	"coverage": item.coverage,&#10;	"premium": &#10;	(((item.brackets filter ($.maxAge &gt; vars.age and $.minAge &lt; vars.age))[0].premiumPerDay&#10;	*&#10;	(daysBetween((vars.tripStartDate as Date),(vars.tripEndDate as Date))+1)))&#10;})' mediaType="application/json" />
+				<munit:attributes value='{&#10;"queryParams": {&#10;		"destination": "Asia",&#10;		"age": 32,&#10;		"tripStartDate": "2020-02-01",&#10;		"tripEndDate": "2020-02-15"}&#10;}' mediaType="application/json" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to getQuoteSub_Flow" doc:id="4330c792-6dcb-4d54-adb3-de8b092d63d5" name="getQuoteSub_Flow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="e36f885b-d3d1-42e6-88db-2bd808df88f8" actual="#[payload.premium]" expected="#[10]"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

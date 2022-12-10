@@ -1,0 +1,63 @@
+#%RAML 1.0
+title: travel-agent-sapi
+uses:
+  dataTypes: library/Library.raml
+  
+
+/quote:
+  description: get quote
+  get:
+    queryParameters:
+      age:
+        description: age of the person who is interested in Travel Insurance
+        type: number
+        minimum: 1
+        maximum: 60
+        example: 35
+      destination:
+        description: place where peron is willing to travel
+        type: string
+        example: "Asia"
+        required: true
+      tripStartDate:
+        description: starting date of journey in yyyy-mm-dd format
+        type: date-only
+        required: true
+        example: "2021-02-11"
+      tripEndDate:
+        description: ending date of journey in yyyy-mm-dd format
+        type: date-only
+        required: true
+        example: "2021-02-21"
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include ./example/getQuoteResponse.json
+
+/policy:    
+  post:
+    description: create new policy
+    headers:
+      username:
+        description: username who is creating this policy
+        type: string
+        required: true
+    body:
+      application/json:
+        type: dataTypes.createPolicyTypes
+        example: !include ./example/postPolicyReq.json
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include ./example/postPolicyRep.json
+              
+          
+  
+    
+
+              
+   
+        
+    

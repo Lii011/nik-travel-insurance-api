@@ -1,0 +1,87 @@
+#%RAML 1.0 DataType
+
+properties:
+  name:
+    description: name of the person
+    required: false
+    type: string
+    example: "ben"
+      
+  dateOfBirth:
+    description: birth date
+    required: true
+    type: date
+    example: "1990-30-10"
+      
+  age:
+    description: age of a person
+    required: true
+    type: number
+    example: 33
+      
+  address:
+    description: permanent address
+    required: true
+    type: string
+    example: "9227 strowberry st. apt 334, Atlanta, GA"
+      
+  tripStartDate:
+    description: when your journey will start
+    required: true
+    type: date
+    example: "2021-02-01"
+      
+  tripEndDate:
+    description: when your journey will end
+    required: true
+    type: date
+    example: "2021-02-15"
+      
+  planName:
+    description: 
+    required: true
+    type: string
+    example: "Gold"
+      
+  premium:
+    description: 
+    required: true
+    type: number
+    example: 300
+      
+  coverage:
+    description: 
+    required: true
+    type: number
+    example: 25000
+      
+  purchaceDate: 
+    description: current date when customer purchase the policy
+    required: true
+    type: date
+    example: "2020-11-11"
+      
+  policyId:
+    description: existing policy number
+    required: true
+    type: string
+    example: "123"
+      
+  newTripEndDate:
+    description: when your journey will end
+    required: true
+    type: date
+    example: "2021-11-2"
+      
+  additionalPremium:
+    description: additional premium you have to pay
+    required: false
+    type: number
+    example: 200
+      
+  extendDate:
+    description: current date when customer extended the policy
+    required: true
+    type: date
+    example: "2020-12-10"
+      
